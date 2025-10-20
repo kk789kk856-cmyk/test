@@ -1,0 +1,28 @@
+name: Check & Deploy Workflow
+
+on:
+  workflow_call:
+    inputs:
+      branch:
+        required: true
+        type: string
+      event_name:
+        required: true
+        type: string
+
+jobs:
+  check_commit:
+    if: ${{ inputs.branch != 'refs/heads/main' && inputs.event_name == 'push' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run check commit
+        run: echo "Running check_commit on branch ${{ inputs.branch }}"
+
+  deploy_job:
+    if: ${{ inputs.branch == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Deploy
+        run: echo "Deploying branch ${{ inputs.branch }}"
