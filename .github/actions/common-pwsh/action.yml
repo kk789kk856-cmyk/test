@@ -1,0 +1,9 @@
+name: Common PowerShell Functions
+description: "Load shared PowerShell functions for reuse in workflows"
+runs:
+  using: "composite"
+  steps:
+    - name: Load common PowerShell functions
+      shell: pwsh
+      run: |
+        . ${{ github.action_path }}/scripts/common.ps1
